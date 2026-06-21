@@ -3,7 +3,6 @@ const express = require("express");
 const cors = require("cors");
 const dotenv = require("dotenv");
 
-
 const connectDB = require("./config/db");
 
 const bookingRoutes = require("./routes/bookingRoutes");
@@ -15,13 +14,28 @@ connectDB();
 
 const app = express();
 
-app.use(cors());
+// ======================================
+// CORS Configuration
+// ======================================
+app.use(
+  cors({
+    origin: [
+      "http://localhost:5173",
+      "https://undercut-salon-frontend.vercel.app",
+    ],
+    credentials: true,
+  })
+);
+
+// Middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+// Routes
 app.use("/api/bookings", bookingRoutes);
 app.use("/api/admin", adminRoutes);
 
+// Home Route
 app.get("/", (req, res) => {
   res.status(200).json({
     success: true,
@@ -29,7 +43,7 @@ app.get("/", (req, res) => {
   });
 });
 
-// 404 Handler
+// 404 Route
 app.use((req, res) => {
   res.status(404).json({
     success: false,
