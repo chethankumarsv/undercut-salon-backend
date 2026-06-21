@@ -2,9 +2,8 @@
 const express = require("express");
 const cors = require("cors");
 const dotenv = require("dotenv");
-const paymentRoutes = require("./routes/paymentRoutes");
 
-app.use("/api/payment", paymentRoutes);
+
 const connectDB = require("./config/db");
 
 const bookingRoutes = require("./routes/bookingRoutes");
